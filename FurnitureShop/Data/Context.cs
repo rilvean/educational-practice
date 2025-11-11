@@ -2,13 +2,13 @@
 
 namespace FurnitureShop.Data;
 
-public partial class FurnitureContext : DbContext
+public partial class Context : DbContext
 {
-    public FurnitureContext()
+    public Context()
     {
     }
 
-    public FurnitureContext(DbContextOptions<FurnitureContext> options)
+    public Context(DbContextOptions<Context> options)
         : base(options)
     {
     }

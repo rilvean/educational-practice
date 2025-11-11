@@ -67,6 +67,7 @@
 			txtPassword.PasswordChar = '*';
 			txtPassword.Size = new Size(513, 34);
 			txtPassword.TabIndex = 1;
+			txtPassword.KeyPress += txt_KeyPress;
 			// 
 			// txtLogin
 			// 
@@ -74,6 +75,7 @@
 			txtLogin.Name = "txtLogin";
 			txtLogin.Size = new Size(513, 34);
 			txtLogin.TabIndex = 0;
+			txtLogin.KeyPress += txt_KeyPress;
 			// 
 			// chkViewPassword
 			// 
@@ -111,6 +113,7 @@
 			txtCaptcha.Name = "txtCaptcha";
 			txtCaptcha.Size = new Size(190, 34);
 			txtCaptcha.TabIndex = 5;
+			txtCaptcha.KeyPress += txt_KeyPress;
 			// 
 			// picCaptcha
 			// 
