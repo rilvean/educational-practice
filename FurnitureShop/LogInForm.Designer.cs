@@ -32,7 +32,7 @@
 			label2 = new Label();
 			txtPassword = new TextBox();
 			txtLogin = new TextBox();
-			chkViewPassword = new CheckBox();
+			chkShowPassword = new CheckBox();
 			btnLogin = new Button();
 			pnlCaptcha = new Panel();
 			txtCaptcha = new TextBox();
@@ -64,9 +64,9 @@
 			// 
 			txtPassword.Location = new Point(408, 211);
 			txtPassword.Name = "txtPassword";
-			txtPassword.PasswordChar = '*';
 			txtPassword.Size = new Size(513, 34);
 			txtPassword.TabIndex = 1;
+			txtPassword.UseSystemPasswordChar = true;
 			txtPassword.KeyPress += txt_KeyPress;
 			// 
 			// txtLogin
@@ -77,15 +77,16 @@
 			txtLogin.TabIndex = 0;
 			txtLogin.KeyPress += txt_KeyPress;
 			// 
-			// chkViewPassword
+			// chkShowPassword
 			// 
-			chkViewPassword.AutoSize = true;
-			chkViewPassword.Location = new Point(942, 213);
-			chkViewPassword.Name = "chkViewPassword";
-			chkViewPassword.Size = new Size(79, 31);
-			chkViewPassword.TabIndex = 2;
-			chkViewPassword.Text = "View";
-			chkViewPassword.UseVisualStyleBackColor = true;
+			chkShowPassword.AutoSize = true;
+			chkShowPassword.Location = new Point(942, 213);
+			chkShowPassword.Name = "chkShowPassword";
+			chkShowPassword.Size = new Size(83, 31);
+			chkShowPassword.TabIndex = 2;
+			chkShowPassword.Text = "Show";
+			chkShowPassword.UseVisualStyleBackColor = true;
+			chkShowPassword.CheckedChanged += chkShowPassword_CheckedChanged;
 			// 
 			// btnLogin
 			// 
@@ -141,7 +142,7 @@
 			ClientSize = new Size(1184, 761);
 			Controls.Add(pnlCaptcha);
 			Controls.Add(btnLogin);
-			Controls.Add(chkViewPassword);
+			Controls.Add(chkShowPassword);
 			Controls.Add(txtLogin);
 			Controls.Add(txtPassword);
 			Controls.Add(label2);
@@ -161,7 +162,7 @@
 		private Label label2;
 		private TextBox txtPassword;
 		private TextBox txtLogin;
-		private CheckBox chkViewPassword;
+		private CheckBox chkShowPassword;
 		private Button btnLogin;
 		private Panel pnlCaptcha;
 		private Button btnCaptchaRefresh;

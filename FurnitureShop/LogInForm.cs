@@ -52,5 +52,10 @@ namespace FurnitureShop
 				e.Handled = true;
 			}
 		}
+
+		private void chkShowPassword_CheckedChanged(object sender, EventArgs e)
+		{
+			txtPassword.UseSystemPasswordChar = !chkShowPassword.Checked;
+		}
 	}
 }
