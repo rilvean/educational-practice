@@ -22,7 +22,7 @@
 
 			captcha = String.Empty;
 			string ALF = "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
-			for (int i = 0; i < 5; ++i)
+			for (int i = 0; i < 4; ++i)
 				captcha += ALF[rnd.Next(ALF.Length)];
 
 			g.DrawString(captcha,

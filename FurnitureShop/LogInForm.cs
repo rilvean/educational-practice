@@ -5,6 +5,10 @@ namespace FurnitureShop
 {
 	public partial class LogInForm : BaseForm
 	{
+		private int attempts = 0;
+		private bool isBlocked = false;
+		private DateTime blockEndTime;
+
 		public LogInForm()
 		{
 			InitializeComponent();
@@ -19,6 +23,19 @@ namespace FurnitureShop
 
 		private void btnLogin_Click(object sender, EventArgs e)
 		{
+			if (isBlocked)
+			{
+				App.Error("Application blocked. Restart required.");
+				return;
+			}
+
+			if (blockEndTime != default && DateTime.Now < blockEndTime)
+			{
+				TimeSpan remaining = blockEndTime - DateTime.Now;
+				App.Error($"Application blocked for {remaining.Minutes} min {remaining.Seconds} sec.");
+				return;
+			}
+
 			string login = txtLogin.Text.Trim();
 			string password = txtPassword.Text.Trim();
 
@@ -28,21 +45,46 @@ namespace FurnitureShop
 
 				if (user != null)
 				{
-					App.Info($"{user.FullName}, {user.Role}");
-					var entranceLog = new EntranceLog
+					if (attempts >= 1)
 					{
-						UserId = user.Id,
-						FullName = user.FullName,
-						Role = user.Role,
-						LogInTime = DateTime.Now
-					};
-					db.Add(entranceLog);
-					db.SaveChanges();
+						if (txtCaptcha.Text.Trim() != App.captcha)
+						{
+							attempts++;
+							App.Error("Captcha incorrect.");
+							CheckBlock();
+							return;
+						}
+					}
+
+					App.Info($"{user.FullName}, {user.Role}");
+					LogUser(user, db);
+					attempts = 0;
+					txtLogin.Text = string.Empty;
+					txtPassword.Text = string.Empty;
+					txtCaptcha.Text = string.Empty;
+					pnlCaptcha.Visible = false;
 				}
 				else
 				{
-					App.Error("Неверный логин или пароль!");
+					attempts++;
+					pnlCaptcha.Visible = true;
+					App.Error("User data incorrect.");
+					CheckBlock();
 				}
+			}
+		}
+
+		private void CheckBlock()
+		{
+			if (attempts == 3)
+			{
+				App.Error("Application blocked for 3 minutes.");
+				blockEndTime = DateTime.Now.AddMinutes(3);
+			}
+			else if (attempts >= 4)
+			{
+				App.Error("Application blocked until restart.");
+				isBlocked = true;
 			}
 		}
 
@@ -50,7 +92,7 @@ namespace FurnitureShop
 		{
 			if (!char.IsControl(e.KeyChar) &&
 				!char.IsLetterOrDigit(e.KeyChar) &&
-				!(e.KeyChar == '@'))	
+				!(e.KeyChar == '@'))
 			{
 				e.Handled = true;
 			}
@@ -59,6 +101,19 @@ namespace FurnitureShop
 		private void chkShowPassword_CheckedChanged(object sender, EventArgs e)
 		{
 			txtPassword.UseSystemPasswordChar = !chkShowPassword.Checked;
+		}
+
+		private void LogUser(User user, Context context)
+		{
+			var entranceLog = new EntranceLog
+			{
+				UserId = user.Id,
+				FullName = user.FullName,
+				Role = user.Role,
+				LogInTime = DateTime.Now
+			};
+			context.Add(entranceLog);
+			context.SaveChanges();
 		}
 	}
 }

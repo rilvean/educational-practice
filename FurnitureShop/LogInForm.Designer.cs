@@ -38,7 +38,6 @@
 			txtCaptcha = new TextBox();
 			picCaptcha = new PictureBox();
 			btnCaptchaRefresh = new Button();
-			lblTimer = new Label();
 			pnlCaptcha.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)picCaptcha).BeginInit();
 			SuspendLayout();
@@ -137,22 +136,11 @@
 			btnCaptchaRefresh.UseVisualStyleBackColor = true;
 			btnCaptchaRefresh.Click += btnCaptchaRefresh_Click;
 			// 
-			// lblTimer
-			// 
-			lblTimer.AutoSize = true;
-			lblTimer.Location = new Point(616, 376);
-			lblTimer.Name = "lblTimer";
-			lblTimer.Size = new Size(94, 27);
-			lblTimer.TabIndex = 999;
-			lblTimer.Text = "lblTimer";
-			lblTimer.Visible = false;
-			// 
 			// LogInForm
 			// 
 			AutoScaleDimensions = new SizeF(96F, 96F);
 			AutoScaleMode = AutoScaleMode.Dpi;
 			ClientSize = new Size(1184, 761);
-			Controls.Add(lblTimer);
 			Controls.Add(pnlCaptcha);
 			Controls.Add(btnLogin);
 			Controls.Add(chkShowPassword);
@@ -181,6 +169,5 @@
 		private Button btnCaptchaRefresh;
 		private PictureBox picCaptcha;
 		private TextBox txtCaptcha;
-		private Label lblTimer;
 	}
 }
