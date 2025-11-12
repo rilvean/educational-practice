@@ -22,7 +22,7 @@ namespace FurnitureShop
 			FormBorderStyle = FormBorderStyle.FixedSingle;
 			MaximizeBox = false;
 			MinimizeBox = false;
-			Icon = (Icon?)new System.ComponentModel.ComponentResourceManager(typeof(BaseForm)).GetObject("$this.Icon");
+			Icon = Properties.Resources.Icon;
 		}
 
 		private void ApplyButtonStyle(Control parent)

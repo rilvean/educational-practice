@@ -13,6 +13,12 @@ namespace FurnitureShop
 		{
 			InitializeComponent();
 			this.user = user;
+			Load += MainForm_Load;
+		}
+
+		private void MainForm_Load(object? sender, EventArgs e)
+		{
+			lblUserInfo.Text = $"{user.FullName} ({user.Role})";
 		}
 
 		protected override void ConfigureForm()

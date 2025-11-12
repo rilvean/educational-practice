@@ -162,7 +162,7 @@
 			Controls.Add(label2);
 			Controls.Add(label1);
 			Name = "LogInForm";
-			Text = "LogInForm";
+			Text = "Obraz Plus - LogInForm";
 			pnlCaptcha.ResumeLayout(false);
 			pnlCaptcha.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)picCaptcha).EndInit();

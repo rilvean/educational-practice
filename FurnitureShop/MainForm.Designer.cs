@@ -31,6 +31,8 @@
 			tabControlMain = new TabControl();
 			tabMaterialsList = new TabPage();
 			tabMaterialsManagement = new TabPage();
+			tabProductsAnalysation = new TabPage();
+			tabLoginHistory = new TabPage();
 			picLogo = new PictureBox();
 			lblUserInfo = new Label();
 			tabControlMain.SuspendLayout();
@@ -41,6 +43,8 @@
 			// 
 			tabControlMain.Controls.Add(tabMaterialsList);
 			tabControlMain.Controls.Add(tabMaterialsManagement);
+			tabControlMain.Controls.Add(tabProductsAnalysation);
+			tabControlMain.Controls.Add(tabLoginHistory);
 			tabControlMain.Dock = DockStyle.Bottom;
 			tabControlMain.Location = new Point(0, 81);
 			tabControlMain.Name = "tabControlMain";
@@ -53,7 +57,7 @@
 			tabMaterialsList.Location = new Point(4, 35);
 			tabMaterialsList.Name = "tabMaterialsList";
 			tabMaterialsList.Padding = new Padding(3);
-			tabMaterialsList.Size = new Size(1176, 658);
+			tabMaterialsList.Size = new Size(1176, 641);
 			tabMaterialsList.TabIndex = 0;
 			tabMaterialsList.Text = "Materials List";
 			tabMaterialsList.UseVisualStyleBackColor = true;
@@ -68,11 +72,31 @@
 			tabMaterialsManagement.Text = "Materials Management";
 			tabMaterialsManagement.UseVisualStyleBackColor = true;
 			// 
+			// tabProductsAnalysation
+			// 
+			tabProductsAnalysation.Location = new Point(4, 35);
+			tabProductsAnalysation.Name = "tabProductsAnalysation";
+			tabProductsAnalysation.Size = new Size(1176, 641);
+			tabProductsAnalysation.TabIndex = 2;
+			tabProductsAnalysation.Text = "Products Analysation";
+			tabProductsAnalysation.UseVisualStyleBackColor = true;
+			// 
+			// tabLoginHistory
+			// 
+			tabLoginHistory.Location = new Point(4, 35);
+			tabLoginHistory.Name = "tabLoginHistory";
+			tabLoginHistory.Size = new Size(1176, 641);
+			tabLoginHistory.TabIndex = 3;
+			tabLoginHistory.Text = "Login History";
+			tabLoginHistory.UseVisualStyleBackColor = true;
+			// 
 			// picLogo
 			// 
+			picLogo.Image = Properties.Resources.Logo;
 			picLogo.Location = new Point(0, 1);
 			picLogo.Name = "picLogo";
 			picLogo.Size = new Size(74, 74);
+			picLogo.SizeMode = PictureBoxSizeMode.StretchImage;
 			picLogo.TabIndex = 1;
 			picLogo.TabStop = false;
 			picLogo.Click += picLogo_Click;
@@ -80,7 +104,7 @@
 			// lblUserInfo
 			// 
 			lblUserInfo.AutoSize = true;
-			lblUserInfo.Location = new Point(843, 32);
+			lblUserInfo.Location = new Point(919, 29);
 			lblUserInfo.Name = "lblUserInfo";
 			lblUserInfo.Size = new Size(95, 27);
 			lblUserInfo.TabIndex = 2;
@@ -95,7 +119,7 @@
 			Controls.Add(picLogo);
 			Controls.Add(tabControlMain);
 			Name = "MainForm";
-			Text = "MainForm";
+			Text = "Obraz Plus - MainForm";
 			tabControlMain.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)picLogo).EndInit();
 			ResumeLayout(false);
@@ -109,5 +133,7 @@
 		private TabPage tabMaterialsManagement;
 		private PictureBox picLogo;
 		private Label lblUserInfo;
+		private TabPage tabProductsAnalysation;
+		private TabPage tabLoginHistory;
 	}
 }

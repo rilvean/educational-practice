@@ -61,12 +61,6 @@ namespace FurnitureShop
 					App.Info($"{user.FullName}, {user.Role}");
 					LogUser(user, db);
 
-					attempts = 0;
-					txtLogin.Text = string.Empty;
-					txtPassword.Text = string.Empty;
-					txtCaptcha.Text = string.Empty;
-					pnlCaptcha.Visible = false;
-
 					User = user;
 					IsAuthenticated = true;
 					Close();
@@ -125,6 +119,13 @@ namespace FurnitureShop
 
 		private void linkLogInAsGuest_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
+			User = new User
+			{
+				FullName = "Гость",
+				Role = Roles.Guest
+			};
+			IsAuthenticated = true;
+			Close();
 		}
 	}
 }
