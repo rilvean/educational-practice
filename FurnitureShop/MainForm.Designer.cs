@@ -30,16 +30,24 @@
 		{
 			tabControlMain = new TabControl();
 			tabMaterialsList = new TabPage();
+			cmbMaterialType = new ComboBox();
+			label3 = new Label();
+			cmbSort = new ComboBox();
+			label2 = new Label();
+			lblSearch = new Label();
+			txtSearch = new TextBox();
+			flowLayoutPanelMaterials = new FlowLayoutPanel();
 			tabMaterialsManagement = new TabPage();
 			tabProductsAnalysation = new TabPage();
 			tabLoginHistory = new TabPage();
+			txtFilterByLogin = new TextBox();
 			label1 = new Label();
 			dataLoginHistory = new DataGridView();
 			picLogo = new PictureBox();
 			lblUserInfo = new Label();
 			lblLogo = new Label();
-			txtFilterByLogin = new TextBox();
 			tabControlMain.SuspendLayout();
+			tabMaterialsList.SuspendLayout();
 			tabLoginHistory.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)dataLoginHistory).BeginInit();
 			((System.ComponentModel.ISupportInitialize)picLogo).BeginInit();
@@ -52,28 +60,102 @@
 			tabControlMain.Controls.Add(tabProductsAnalysation);
 			tabControlMain.Controls.Add(tabLoginHistory);
 			tabControlMain.Dock = DockStyle.Bottom;
-			tabControlMain.Location = new Point(0, 81);
+			tabControlMain.Location = new Point(0, 111);
 			tabControlMain.Name = "tabControlMain";
 			tabControlMain.SelectedIndex = 0;
-			tabControlMain.Size = new Size(1184, 680);
+			tabControlMain.Size = new Size(1184, 650);
 			tabControlMain.TabIndex = 0;
 			// 
 			// tabMaterialsList
 			// 
+			tabMaterialsList.Controls.Add(cmbMaterialType);
+			tabMaterialsList.Controls.Add(label3);
+			tabMaterialsList.Controls.Add(cmbSort);
+			tabMaterialsList.Controls.Add(label2);
+			tabMaterialsList.Controls.Add(lblSearch);
+			tabMaterialsList.Controls.Add(txtSearch);
+			tabMaterialsList.Controls.Add(flowLayoutPanelMaterials);
 			tabMaterialsList.Location = new Point(4, 35);
 			tabMaterialsList.Name = "tabMaterialsList";
 			tabMaterialsList.Padding = new Padding(3);
-			tabMaterialsList.Size = new Size(1176, 641);
+			tabMaterialsList.Size = new Size(1176, 611);
 			tabMaterialsList.TabIndex = 0;
 			tabMaterialsList.Text = "Materials List";
 			tabMaterialsList.UseVisualStyleBackColor = true;
+			// 
+			// cmbMaterialType
+			// 
+			cmbMaterialType.DropDownStyle = ComboBoxStyle.DropDownList;
+			cmbMaterialType.FormattingEnabled = true;
+			cmbMaterialType.Location = new Point(828, 540);
+			cmbMaterialType.Name = "cmbMaterialType";
+			cmbMaterialType.Size = new Size(247, 34);
+			cmbMaterialType.TabIndex = 6;
+			cmbMaterialType.SelectedIndexChanged += cmbMaterialType_SelectedIndexChanged;
+			// 
+			// label3
+			// 
+			label3.AutoSize = true;
+			label3.Location = new Point(828, 505);
+			label3.Name = "label3";
+			label3.Size = new Size(144, 27);
+			label3.TabIndex = 5;
+			label3.Text = "Filter by type:";
+			// 
+			// cmbSort
+			// 
+			cmbSort.DropDownStyle = ComboBoxStyle.DropDownList;
+			cmbSort.FormattingEnabled = true;
+			cmbSort.Items.AddRange(new object[] { "No sort", "Ascending", "Descending" });
+			cmbSort.Location = new Point(597, 540);
+			cmbSort.Name = "cmbSort";
+			cmbSort.Size = new Size(201, 34);
+			cmbSort.TabIndex = 4;
+			cmbSort.SelectedIndexChanged += cmbSort_SelectedIndexChanged;
+			// 
+			// label2
+			// 
+			label2.AutoSize = true;
+			label2.Location = new Point(597, 505);
+			label2.Name = "label2";
+			label2.Size = new Size(201, 27);
+			label2.TabIndex = 3;
+			label2.Text = "Sort by qty in stock:";
+			// 
+			// lblSearch
+			// 
+			lblSearch.AutoSize = true;
+			lblSearch.Location = new Point(95, 505);
+			lblSearch.Name = "lblSearch";
+			lblSearch.Size = new Size(82, 27);
+			lblSearch.TabIndex = 2;
+			lblSearch.Text = "Search:";
+			// 
+			// txtSearch
+			// 
+			txtSearch.Location = new Point(95, 540);
+			txtSearch.Name = "txtSearch";
+			txtSearch.Size = new Size(476, 34);
+			txtSearch.TabIndex = 1;
+			txtSearch.TextChanged += txtSearch_TextChanged;
+			// 
+			// flowLayoutPanelMaterials
+			// 
+			flowLayoutPanelMaterials.AutoScroll = true;
+			flowLayoutPanelMaterials.Dock = DockStyle.Top;
+			flowLayoutPanelMaterials.FlowDirection = FlowDirection.TopDown;
+			flowLayoutPanelMaterials.Location = new Point(3, 3);
+			flowLayoutPanelMaterials.Name = "flowLayoutPanelMaterials";
+			flowLayoutPanelMaterials.Size = new Size(1170, 472);
+			flowLayoutPanelMaterials.TabIndex = 0;
+			flowLayoutPanelMaterials.WrapContents = false;
 			// 
 			// tabMaterialsManagement
 			// 
 			tabMaterialsManagement.Location = new Point(4, 35);
 			tabMaterialsManagement.Name = "tabMaterialsManagement";
 			tabMaterialsManagement.Padding = new Padding(3);
-			tabMaterialsManagement.Size = new Size(1176, 641);
+			tabMaterialsManagement.Size = new Size(1176, 611);
 			tabMaterialsManagement.TabIndex = 1;
 			tabMaterialsManagement.Text = "Materials Management";
 			tabMaterialsManagement.UseVisualStyleBackColor = true;
@@ -82,7 +164,7 @@
 			// 
 			tabProductsAnalysation.Location = new Point(4, 35);
 			tabProductsAnalysation.Name = "tabProductsAnalysation";
-			tabProductsAnalysation.Size = new Size(1176, 641);
+			tabProductsAnalysation.Size = new Size(1176, 611);
 			tabProductsAnalysation.TabIndex = 2;
 			tabProductsAnalysation.Text = "Products Analysation";
 			tabProductsAnalysation.UseVisualStyleBackColor = true;
@@ -94,10 +176,18 @@
 			tabLoginHistory.Controls.Add(dataLoginHistory);
 			tabLoginHistory.Location = new Point(4, 35);
 			tabLoginHistory.Name = "tabLoginHistory";
-			tabLoginHistory.Size = new Size(1176, 641);
+			tabLoginHistory.Size = new Size(1176, 611);
 			tabLoginHistory.TabIndex = 3;
 			tabLoginHistory.Text = "Login History";
 			tabLoginHistory.UseVisualStyleBackColor = true;
+			// 
+			// txtFilterByLogin
+			// 
+			txtFilterByLogin.Location = new Point(419, 555);
+			txtFilterByLogin.Name = "txtFilterByLogin";
+			txtFilterByLogin.Size = new Size(354, 34);
+			txtFilterByLogin.TabIndex = 2;
+			txtFilterByLogin.TextChanged += txtFilterByLogin_TextChanged;
 			// 
 			// label1
 			// 
@@ -148,14 +238,6 @@
 			lblLogo.TabIndex = 3;
 			lblLogo.Text = "Obraz Plus";
 			// 
-			// txtFilterByLogin
-			// 
-			txtFilterByLogin.Location = new Point(419, 555);
-			txtFilterByLogin.Name = "txtFilterByLogin";
-			txtFilterByLogin.Size = new Size(354, 34);
-			txtFilterByLogin.TabIndex = 2;
-			txtFilterByLogin.TextChanged += txtFilterByLogin_TextChanged;
-			// 
 			// MainForm
 			// 
 			AutoScaleDimensions = new SizeF(96F, 96F);
@@ -168,6 +250,8 @@
 			Name = "MainForm";
 			Text = "Obraz Plus - MainForm";
 			tabControlMain.ResumeLayout(false);
+			tabMaterialsList.ResumeLayout(false);
+			tabMaterialsList.PerformLayout();
 			tabLoginHistory.ResumeLayout(false);
 			tabLoginHistory.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)dataLoginHistory).EndInit();
@@ -189,5 +273,12 @@
 		private DataGridView dataLoginHistory;
 		private Label label1;
 		private TextBox txtFilterByLogin;
+		private FlowLayoutPanel flowLayoutPanelMaterials;
+		private Label lblSearch;
+		private TextBox txtSearch;
+		private ComboBox cmbSort;
+		private Label label2;
+		private ComboBox cmbMaterialType;
+		private Label label3;
 	}
 }
