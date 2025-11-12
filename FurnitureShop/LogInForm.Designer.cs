@@ -38,6 +38,7 @@
 			txtCaptcha = new TextBox();
 			picCaptcha = new PictureBox();
 			btnCaptchaRefresh = new Button();
+			lblTimer = new Label();
 			pnlCaptcha.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)picCaptcha).BeginInit();
 			SuspendLayout();
@@ -103,17 +104,18 @@
 			pnlCaptcha.Controls.Add(txtCaptcha);
 			pnlCaptcha.Controls.Add(picCaptcha);
 			pnlCaptcha.Controls.Add(btnCaptchaRefresh);
-			pnlCaptcha.Location = new Point(488, 374);
+			pnlCaptcha.Location = new Point(488, 356);
 			pnlCaptcha.Name = "pnlCaptcha";
 			pnlCaptcha.Size = new Size(433, 230);
-			pnlCaptcha.TabIndex = 9999;
+			pnlCaptcha.TabIndex = 4;
+			pnlCaptcha.Visible = false;
 			// 
 			// txtCaptcha
 			// 
 			txtCaptcha.Location = new Point(77, 146);
 			txtCaptcha.Name = "txtCaptcha";
 			txtCaptcha.Size = new Size(190, 34);
-			txtCaptcha.TabIndex = 5;
+			txtCaptcha.TabIndex = 6;
 			txtCaptcha.KeyPress += txt_KeyPress;
 			// 
 			// picCaptcha
@@ -130,16 +132,27 @@
 			btnCaptchaRefresh.Location = new Point(294, 35);
 			btnCaptchaRefresh.Name = "btnCaptchaRefresh";
 			btnCaptchaRefresh.Size = new Size(106, 45);
-			btnCaptchaRefresh.TabIndex = 4;
+			btnCaptchaRefresh.TabIndex = 5;
 			btnCaptchaRefresh.Text = "refresh";
 			btnCaptchaRefresh.UseVisualStyleBackColor = true;
 			btnCaptchaRefresh.Click += btnCaptchaRefresh_Click;
+			// 
+			// lblTimer
+			// 
+			lblTimer.AutoSize = true;
+			lblTimer.Location = new Point(616, 376);
+			lblTimer.Name = "lblTimer";
+			lblTimer.Size = new Size(94, 27);
+			lblTimer.TabIndex = 999;
+			lblTimer.Text = "lblTimer";
+			lblTimer.Visible = false;
 			// 
 			// LogInForm
 			// 
 			AutoScaleDimensions = new SizeF(96F, 96F);
 			AutoScaleMode = AutoScaleMode.Dpi;
 			ClientSize = new Size(1184, 761);
+			Controls.Add(lblTimer);
 			Controls.Add(pnlCaptcha);
 			Controls.Add(btnLogin);
 			Controls.Add(chkShowPassword);
@@ -168,5 +181,6 @@
 		private Button btnCaptchaRefresh;
 		private PictureBox picCaptcha;
 		private TextBox txtCaptcha;
+		private Label lblTimer;
 	}
 }

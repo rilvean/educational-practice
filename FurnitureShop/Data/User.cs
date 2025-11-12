@@ -11,4 +11,6 @@ public partial class User
     public string Login { get; set; } = null!;
 
     public string Password { get; set; } = null!;
+
+	public virtual ICollection<EntranceLog> EntranceLogs { get; set; } = new List<EntranceLog>();
 }

@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace FurnitureShop
+﻿namespace FurnitureShop
 {
 	internal static class App
 	{
@@ -45,6 +43,16 @@ namespace FurnitureShop
 						result.SetPixel(i, j, Color.White);
 
 			return result;
+		}
+
+		public static void Error(string message)
+		{
+			MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+		}
+
+		public static void Info(string message)
+		{
+			MessageBox.Show(message, "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 	}
 }

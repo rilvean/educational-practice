@@ -25,7 +25,9 @@ public partial class Context : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    public virtual DbSet<EntranceLog> EntranceLogs { get; set; }
+
+	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		=> optionsBuilder.UseSqlServer("Server=82EY;Database=FurnitureShop;Trusted_Connection=True;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -84,7 +86,28 @@ public partial class Context : DbContext
             entity.Property(e => e.Role).HasMaxLength(50);
         });
 
-        OnModelCreatingPartial(modelBuilder);
+		modelBuilder.Entity<EntranceLog>(entity =>
+		{
+			entity.HasKey(e => e.Id);
+
+			entity.Property(e => e.FullName)
+				.IsRequired()
+				.HasMaxLength(100);
+
+			entity.Property(e => e.Role)
+				.IsRequired()
+				.HasMaxLength(50);
+
+			entity.Property(e => e.LogInTime)
+				.HasColumnType("datetime")
+				.HasDefaultValueSql("GETDATE()");
+
+			entity.HasOne(e => e.User).WithMany(u => u.EntranceLogs)
+				.HasForeignKey(e => e.UserId)
+				.OnDelete(DeleteBehavior.Cascade);
+		});
+
+		OnModelCreatingPartial(modelBuilder);
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

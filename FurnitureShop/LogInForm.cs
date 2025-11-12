@@ -21,24 +21,18 @@ namespace FurnitureShop
 			string login = txtLogin.Text.Trim();
 			string password = txtPassword.Text.Trim();
 
-			if (txtCaptcha.Text != App.captcha)
-			{
-				MessageBox.Show("Неверная капча!");
-				return;
-			}
-
 			using (Context db = new Context())
 			{
-				var user = db.Users
-					.FirstOrDefault(u => u.Login == login && u.Password == password);
+				var user = db.Users.FirstOrDefault(u => u.Login == login && u.Password == password);
+				
 
 				if (user != null)
 				{
-					MessageBox.Show($"Добро пожаловать, {user.FullName}!");
+					App.Info($"Добро пожаловать, {user.FullName}!");
 				}
 				else
 				{
-					MessageBox.Show("Неверный логин или пароль!");
+					App.Error("Неверный логин или пароль!");
 				}
 			}
 		}
@@ -47,7 +41,7 @@ namespace FurnitureShop
 		{
 			if (!char.IsControl(e.KeyChar) &&
 				!char.IsLetterOrDigit(e.KeyChar) &&
-				!(e.KeyChar == '@'))
+				!(e.KeyChar == '@'))	
 			{
 				e.Handled = true;
 			}
