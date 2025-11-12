@@ -1,5 +1,4 @@
 ﻿using FurnitureShop.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace FurnitureShop
 {
@@ -8,6 +7,9 @@ namespace FurnitureShop
 		private int attempts = 0;
 		private bool isBlocked = false;
 		private DateTime blockEndTime;
+
+		public bool IsAuthenticated { get; set; } = false;
+		public User User { get; set; } = null!;
 
 		public LogInForm()
 		{
@@ -58,11 +60,16 @@ namespace FurnitureShop
 
 					App.Info($"{user.FullName}, {user.Role}");
 					LogUser(user, db);
+
 					attempts = 0;
 					txtLogin.Text = string.Empty;
 					txtPassword.Text = string.Empty;
 					txtCaptcha.Text = string.Empty;
 					pnlCaptcha.Visible = false;
+
+					User = user;
+					IsAuthenticated = true;
+					Close();
 				}
 				else
 				{
@@ -114,6 +121,10 @@ namespace FurnitureShop
 			};
 			context.Add(entranceLog);
 			context.SaveChanges();
+		}
+
+		private void linkLogInAsGuest_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
 		}
 	}
 }

@@ -2,11 +2,11 @@ namespace FurnitureShop
 {
 	public partial class BaseForm : Form
 	{
-		protected readonly Color mainColor = Color.White;                         // #FFFFFF
-		protected readonly Color additionalColor = Color.FromArgb(191, 214, 246); // #BFD6F6
-		protected readonly Color accentColor = Color.FromArgb(64, 92, 115);       // #405C73
+		protected readonly Color MainColor = Color.White;                         // #FFFFFF
+		protected readonly Color AdditionalColor = Color.FromArgb(191, 214, 246); // #BFD6F6
+		protected readonly Color AccentColor = Color.FromArgb(64, 92, 115);       // #405C73
 
-		protected readonly Font baseFont = new Font("Constantia", 16F, FontStyle.Regular);
+		protected readonly Font BaseFont = new Font("Constantia", 16F, FontStyle.Regular);
 
 		public BaseForm()
 		{
@@ -15,8 +15,8 @@ namespace FurnitureShop
 
 		protected virtual void ConfigureForm()
 		{
-			Font = baseFont;
-			BackColor = mainColor;
+			Font = BaseFont;
+			BackColor = MainColor;
 			Size = new Size(1200, 800);
 			StartPosition = FormStartPosition.CenterScreen;
 			FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -31,8 +31,8 @@ namespace FurnitureShop
 			{
 				if (c is Button btn)
 				{
-					btn.BackColor = additionalColor;
-					btn.ForeColor = accentColor;
+					btn.BackColor = AdditionalColor;
+					btn.ForeColor = AccentColor;
 					btn.FlatStyle = FlatStyle.Flat;
 					btn.FlatAppearance.BorderSize = 1;
 					btn.FlatAppearance.BorderColor = Color.Black;
@@ -50,8 +50,8 @@ namespace FurnitureShop
 			{
 				if (c is TextBox txt)
 				{
-					txt.BackColor = additionalColor;
-					txt.ForeColor = accentColor;
+					txt.BackColor = AdditionalColor;
+					txt.ForeColor = AccentColor;
 					txt.BorderStyle = BorderStyle.FixedSingle;
 					txt.Font = new Font("Constantia", 14F, FontStyle.Regular);
 				}

@@ -38,6 +38,7 @@
 			txtCaptcha = new TextBox();
 			picCaptcha = new PictureBox();
 			btnCaptchaRefresh = new Button();
+			linkLogInAsGuest = new LinkLabel();
 			pnlCaptcha.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)picCaptcha).BeginInit();
 			SuspendLayout();
@@ -136,11 +137,23 @@
 			btnCaptchaRefresh.UseVisualStyleBackColor = true;
 			btnCaptchaRefresh.Click += btnCaptchaRefresh_Click;
 			// 
+			// linkLogInAsGuest
+			// 
+			linkLogInAsGuest.AutoSize = true;
+			linkLogInAsGuest.Location = new Point(191, 621);
+			linkLogInAsGuest.Name = "linkLogInAsGuest";
+			linkLogInAsGuest.Size = new Size(174, 27);
+			linkLogInAsGuest.TabIndex = 10000;
+			linkLogInAsGuest.TabStop = true;
+			linkLogInAsGuest.Text = "Log in as a Guest";
+			linkLogInAsGuest.LinkClicked += linkLogInAsGuest_LinkClicked;
+			// 
 			// LogInForm
 			// 
 			AutoScaleDimensions = new SizeF(96F, 96F);
 			AutoScaleMode = AutoScaleMode.Dpi;
 			ClientSize = new Size(1184, 761);
+			Controls.Add(linkLogInAsGuest);
 			Controls.Add(pnlCaptcha);
 			Controls.Add(btnLogin);
 			Controls.Add(chkShowPassword);
@@ -169,5 +182,6 @@
 		private Button btnCaptchaRefresh;
 		private PictureBox picCaptcha;
 		private TextBox txtCaptcha;
+		private LinkLabel linkLogInAsGuest;
 	}
 }
