@@ -1,4 +1,5 @@
 ﻿using FurnitureShop.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace FurnitureShop
 {
@@ -24,11 +25,19 @@ namespace FurnitureShop
 			using (Context db = new Context())
 			{
 				var user = db.Users.FirstOrDefault(u => u.Login == login && u.Password == password);
-				
 
 				if (user != null)
 				{
-					App.Info($"Добро пожаловать, {user.FullName}!");
+					App.Info($"{user.FullName}, {user.Role}");
+					var entranceLog = new EntranceLog
+					{
+						UserId = user.Id,
+						FullName = user.FullName,
+						Role = user.Role,
+						LogInTime = DateTime.Now
+					};
+					db.Add(entranceLog);
+					db.SaveChanges();
 				}
 				else
 				{
