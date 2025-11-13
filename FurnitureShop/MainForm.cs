@@ -29,6 +29,7 @@ namespace FurnitureShop
 			lblLogo.ForeColor = AccentColor;
 			LoadLoginHistory();
 			LoadMaterials();
+
 			LoadMaterialsToDataGrid();
 			cmbSort.SelectedIndex = 0;
 
@@ -65,9 +66,10 @@ namespace FurnitureShop
 			dataGridView.AllowUserToResizeRows = false;
 
 			dataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-			dataGridView.MultiSelect = multiSelect;
 
+			dataGridView.MultiSelect = multiSelect;
 			dataGridView.AutoSizeColumnsMode = mode;
+
 			dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
 
 			dataGridView.BackgroundColor = backColor;
