@@ -97,6 +97,12 @@ namespace FurnitureShop
 					return;
 				}
 
+				if (tb.SelectionStart == 0 && e.KeyChar == ',')
+				{
+					e.Handled = true;
+					return;
+				}
+
 				if (e.KeyChar == ',' && tb.Text.Contains(','))
 				{
 					e.Handled = true;

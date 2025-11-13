@@ -30,7 +30,7 @@
 		{
 			tabControlMain = new TabControl();
 			tabMaterialsList = new TabPage();
-			cmbMaterialType = new ComboBox();
+			cmbFilterByType = new ComboBox();
 			label3 = new Label();
 			cmbSort = new ComboBox();
 			label2 = new Label();
@@ -43,6 +43,15 @@
 			btnEdit = new Button();
 			dataMaterials = new DataGridView();
 			tabProductsAnalysation = new TabPage();
+			lblProductionResult = new Label();
+			dataProductsByMaterial = new DataGridView();
+			btnCalculateProduction = new Button();
+			numMaterialAmount = new NumericUpDown();
+			cmbMaterialType = new ComboBox();
+			cmbProductType = new ComboBox();
+			label6 = new Label();
+			label5 = new Label();
+			label4 = new Label();
 			tabLoginHistory = new TabPage();
 			txtFilterByLogin = new TextBox();
 			label1 = new Label();
@@ -54,6 +63,9 @@
 			tabMaterialsList.SuspendLayout();
 			tabMaterialsManagement.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)dataMaterials).BeginInit();
+			tabProductsAnalysation.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)dataProductsByMaterial).BeginInit();
+			((System.ComponentModel.ISupportInitialize)numMaterialAmount).BeginInit();
 			tabLoginHistory.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)dataLoginHistory).BeginInit();
 			((System.ComponentModel.ISupportInitialize)picLogo).BeginInit();
@@ -74,7 +86,7 @@
 			// 
 			// tabMaterialsList
 			// 
-			tabMaterialsList.Controls.Add(cmbMaterialType);
+			tabMaterialsList.Controls.Add(cmbFilterByType);
 			tabMaterialsList.Controls.Add(label3);
 			tabMaterialsList.Controls.Add(cmbSort);
 			tabMaterialsList.Controls.Add(label2);
@@ -89,15 +101,15 @@
 			tabMaterialsList.Text = "Materials List";
 			tabMaterialsList.UseVisualStyleBackColor = true;
 			// 
-			// cmbMaterialType
+			// cmbFilterByType
 			// 
-			cmbMaterialType.DropDownStyle = ComboBoxStyle.DropDownList;
-			cmbMaterialType.FormattingEnabled = true;
-			cmbMaterialType.Location = new Point(828, 540);
-			cmbMaterialType.Name = "cmbMaterialType";
-			cmbMaterialType.Size = new Size(247, 34);
-			cmbMaterialType.TabIndex = 6;
-			cmbMaterialType.SelectedIndexChanged += cmbMaterialType_SelectedIndexChanged;
+			cmbFilterByType.DropDownStyle = ComboBoxStyle.DropDownList;
+			cmbFilterByType.FormattingEnabled = true;
+			cmbFilterByType.Location = new Point(828, 540);
+			cmbFilterByType.Name = "cmbFilterByType";
+			cmbFilterByType.Size = new Size(247, 34);
+			cmbFilterByType.TabIndex = 6;
+			cmbFilterByType.SelectedIndexChanged += cmbMaterialType_SelectedIndexChanged;
 			// 
 			// label3
 			// 
@@ -214,12 +226,109 @@
 			// 
 			// tabProductsAnalysation
 			// 
+			tabProductsAnalysation.Controls.Add(lblProductionResult);
+			tabProductsAnalysation.Controls.Add(dataProductsByMaterial);
+			tabProductsAnalysation.Controls.Add(btnCalculateProduction);
+			tabProductsAnalysation.Controls.Add(numMaterialAmount);
+			tabProductsAnalysation.Controls.Add(cmbMaterialType);
+			tabProductsAnalysation.Controls.Add(cmbProductType);
+			tabProductsAnalysation.Controls.Add(label6);
+			tabProductsAnalysation.Controls.Add(label5);
+			tabProductsAnalysation.Controls.Add(label4);
 			tabProductsAnalysation.Location = new Point(4, 35);
 			tabProductsAnalysation.Name = "tabProductsAnalysation";
 			tabProductsAnalysation.Size = new Size(1176, 611);
 			tabProductsAnalysation.TabIndex = 2;
 			tabProductsAnalysation.Text = "Products Analysation";
 			tabProductsAnalysation.UseVisualStyleBackColor = true;
+			// 
+			// lblProductionResult
+			// 
+			lblProductionResult.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+			lblProductionResult.AutoSize = true;
+			lblProductionResult.Location = new Point(535, 559);
+			lblProductionResult.Name = "lblProductionResult";
+			lblProductionResult.Size = new Size(67, 27);
+			lblProductionResult.TabIndex = 1003;
+			lblProductionResult.Text = "result";
+			// 
+			// dataProductsByMaterial
+			// 
+			dataProductsByMaterial.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+			dataProductsByMaterial.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			dataProductsByMaterial.Location = new Point(40, 104);
+			dataProductsByMaterial.Name = "dataProductsByMaterial";
+			dataProductsByMaterial.Size = new Size(1100, 424);
+			dataProductsByMaterial.TabIndex = 4;
+			// 
+			// btnCalculateProduction
+			// 
+			btnCalculateProduction.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+			btnCalculateProduction.Location = new Point(985, 34);
+			btnCalculateProduction.Name = "btnCalculateProduction";
+			btnCalculateProduction.Size = new Size(155, 64);
+			btnCalculateProduction.TabIndex = 3;
+			btnCalculateProduction.Text = "Calculate";
+			btnCalculateProduction.UseVisualStyleBackColor = true;
+			btnCalculateProduction.Click += btnCalculateProduction_Click;
+			// 
+			// numMaterialAmount
+			// 
+			numMaterialAmount.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+			numMaterialAmount.Location = new Point(655, 64);
+			numMaterialAmount.Name = "numMaterialAmount";
+			numMaterialAmount.Size = new Size(262, 34);
+			numMaterialAmount.TabIndex = 2;
+			numMaterialAmount.TextAlign = HorizontalAlignment.Center;
+			// 
+			// cmbMaterialType
+			// 
+			cmbMaterialType.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+			cmbMaterialType.DropDownStyle = ComboBoxStyle.DropDownList;
+			cmbMaterialType.FormattingEnabled = true;
+			cmbMaterialType.Location = new Point(345, 64);
+			cmbMaterialType.Name = "cmbMaterialType";
+			cmbMaterialType.Size = new Size(208, 34);
+			cmbMaterialType.TabIndex = 1;
+			// 
+			// cmbProductType
+			// 
+			cmbProductType.DropDownStyle = ComboBoxStyle.DropDownList;
+			cmbProductType.FormattingEnabled = true;
+			cmbProductType.Location = new Point(40, 64);
+			cmbProductType.Name = "cmbProductType";
+			cmbProductType.Size = new Size(202, 34);
+			cmbProductType.TabIndex = 0;
+			// 
+			// label6
+			// 
+			label6.Anchor = AnchorStyles.Bottom;
+			label6.AutoSize = true;
+			label6.Location = new Point(655, 33);
+			label6.Name = "label6";
+			label6.Size = new Size(262, 27);
+			label6.TabIndex = 999;
+			label6.Text = "Enter the qty of materials:";
+			// 
+			// label5
+			// 
+			label5.Anchor = AnchorStyles.Bottom;
+			label5.AutoSize = true;
+			label5.Location = new Point(345, 34);
+			label5.Name = "label5";
+			label5.Size = new Size(208, 27);
+			label5.TabIndex = 999;
+			label5.Text = "Select material type:";
+			// 
+			// label4
+			// 
+			label4.Anchor = AnchorStyles.Bottom;
+			label4.AutoSize = true;
+			label4.Location = new Point(40, 34);
+			label4.Name = "label4";
+			label4.Size = new Size(202, 27);
+			label4.TabIndex = 999;
+			label4.Text = "Select product type:";
 			// 
 			// tabLoginHistory
 			// 
@@ -306,6 +415,10 @@
 			tabMaterialsList.PerformLayout();
 			tabMaterialsManagement.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)dataMaterials).EndInit();
+			tabProductsAnalysation.ResumeLayout(false);
+			tabProductsAnalysation.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)dataProductsByMaterial).EndInit();
+			((System.ComponentModel.ISupportInitialize)numMaterialAmount).EndInit();
 			tabLoginHistory.ResumeLayout(false);
 			tabLoginHistory.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)dataLoginHistory).EndInit();
@@ -332,11 +445,20 @@
 		private TextBox txtSearch;
 		private ComboBox cmbSort;
 		private Label label2;
-		private ComboBox cmbMaterialType;
+		private ComboBox cmbFilterByType;
 		private Label label3;
 		private Button btnRemove;
 		private Button btnAdd;
 		private Button btnEdit;
 		private DataGridView dataMaterials;
+		private Label label6;
+		private Label label5;
+		private Label label4;
+		private NumericUpDown numMaterialAmount;
+		private ComboBox cmbMaterialType;
+		private ComboBox cmbProductType;
+		private DataGridView dataProductsByMaterial;
+		private Button btnCalculateProduction;
+		private Label lblProductionResult;
 	}
 }

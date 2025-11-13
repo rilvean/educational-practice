@@ -33,11 +33,27 @@ namespace FurnitureShop
 			LoadMaterialsToDataGrid();
 			cmbSort.SelectedIndex = 0;
 
+			LoadProductAndMaterialTypes();
+			FormatDataGridView(dataProductsByMaterial, MainColor, AdditionalColor, AccentColor, Font);
+			lblProductionResult.Text = string.Empty;
+			numMaterialAmount.Maximum = int.MaxValue;
+			numMaterialAmount.Value = 100;
+
+			// Login History
 			txtFilterByLogin.Enabled = user.Role != Roles.Guest;
+
+			// Materials List
 			txtSearch.Enabled = user.Role != Roles.Guest;
 			cmbSort.Enabled = user.Role != Roles.Guest;
-			cmbMaterialType.Enabled = user.Role != Roles.Guest;
+			cmbFilterByType.Enabled = user.Role != Roles.Guest;
 
+			// Product Analysation
+			cmbProductType.Enabled = (user.Role == Roles.Manager) || (user.Role == Roles.Admin);
+			cmbMaterialType.Enabled = (user.Role == Roles.Manager) || (user.Role == Roles.Admin);
+			numMaterialAmount.Enabled = (user.Role == Roles.Manager) || (user.Role == Roles.Admin);
+			btnCalculateProduction.Enabled = (user.Role == Roles.Manager) || (user.Role == Roles.Admin);
+
+			// Materials Management
 			btnEdit.Enabled = user.Role == Roles.Admin;
 			btnAdd.Enabled = user.Role == Roles.Admin;
 			btnRemove.Enabled = user.Role == Roles.Admin;
@@ -192,10 +208,10 @@ namespace FurnitureShop
 					.Select(t => t.Name)
 					.ToList();
 
-				cmbMaterialType.Items.Clear();
-				cmbMaterialType.Items.Add("Все типы");
-				cmbMaterialType.Items.AddRange(types.ToArray());
-				cmbMaterialType.SelectedIndex = 0;
+				cmbFilterByType.Items.Clear();
+				cmbFilterByType.Items.Add("Все типы");
+				cmbFilterByType.Items.AddRange(types.ToArray());
+				cmbFilterByType.SelectedIndex = 0;
 			}
 
 			DisplayMaterials(allMaterials);
@@ -228,7 +244,7 @@ namespace FurnitureShop
 				)
 			);
 
-			string? selectedType = cmbMaterialType.SelectedItem?.ToString();
+			string? selectedType = cmbFilterByType.SelectedItem?.ToString();
 			if (!string.IsNullOrEmpty(selectedType) && selectedType != "Все типы")
 			{
 				filtered = filtered.Where(m => m.MaterialsType?.Name == selectedType);
@@ -354,6 +370,103 @@ namespace FurnitureShop
 				dataMaterials.DataSource = materials;
 				dataMaterials.AutoResizeColumns();
 				dataMaterials.AutoResizeRows();
+			}
+		}
+
+		//
+		// ProductsAnalysation
+		//
+		private void btnCalculateProduction_Click(object sender, EventArgs e)
+		{
+			if (cmbProductType.SelectedValue == null || cmbMaterialType.SelectedValue == null)
+			{
+				App.Error("Select product type and material type.");
+				return;
+			}
+
+			int productTypeId = (int)cmbProductType.SelectedValue;
+			int materialTypeId = (int)cmbMaterialType.SelectedValue;
+			int materialAmount = (int)numMaterialAmount.Value;
+
+			int result = CalculateProductionQuantity(productTypeId, materialTypeId, materialAmount);
+
+			if (result < 0)
+			{
+				lblProductionResult.Text = "null";
+				dataProductsByMaterial.DataSource = null;
+				return;
+			}
+			else
+				lblProductionResult.Text = $"Can be made {result} pcs.";
+
+			LoadProductsUsingMaterial(materialTypeId);
+		}
+
+		private int CalculateProductionQuantity(int productTypeId, int materialTypeId, int materialAmount)
+		{
+			using (var db = new Context())
+			{
+				var materialsProduct = db.MaterialsProducts
+					.Include(mp => mp.Product)
+					.Include(mp => mp.Material)
+					.FirstOrDefault(mp => mp.Material!.MaterialsTypeId == materialTypeId &&
+										  mp.Product!.ProductsTypeId == productTypeId);
+
+				if (materialsProduct == null)
+					return -1;
+
+				double requiredQuantityPerProduct = materialsProduct.RequiredQuantityMaterial;
+
+				double lossPercent = db.MaterialsTypes
+					.Where(m => m.Id == materialTypeId)
+					.Select(m => m.MaterialLossPercent)
+					.FirstOrDefault();
+
+				double effectiveMaterial = materialAmount * (1 - lossPercent / 100.0);
+				int productionQuantity = (int)Math.Floor(effectiveMaterial / requiredQuantityPerProduct);
+
+				return productionQuantity;
+			}
+		}
+
+		private void LoadProductsUsingMaterial(int materialTypeId)
+		{
+			using (var db = new Context())
+			{
+				var products = db.MaterialsProducts
+					.Include(mp => mp.Product)
+					.Include(mp => mp.Material)
+					.Where(mp => mp.Material!.MaterialsTypeId == materialTypeId &&
+						mp.Product!.ProductsTypeId == (int)cmbProductType.SelectedValue! &&
+						mp.Material!.MaterialsTypeId == (int)cmbMaterialType.SelectedValue!)
+					.Select(mp => new
+					{
+						Prodcut = mp.Product!.Name,
+						RequiredQty = mp.RequiredQuantityMaterial
+					})
+					.ToList();
+
+				dataProductsByMaterial.DataSource = products;
+				dataProductsByMaterial.AutoResizeColumns();
+				dataProductsByMaterial.AutoResizeRows();
+			}
+		}
+
+
+		private void LoadProductAndMaterialTypes()
+		{
+			using (var db = new Context())
+			{
+				var productTypes = db.ProductsTypes.ToList();
+				var materialTypes = db.MaterialsTypes.ToList();
+
+				cmbProductType.DataSource = productTypes;
+				cmbProductType.DisplayMember = "Name";
+				cmbProductType.ValueMember = "Id";
+
+				cmbMaterialType.DataSource = materialTypes;
+				cmbMaterialType.DisplayMember = "Name";
+				cmbMaterialType.ValueMember = "Id";
 			}
 		}
 	}
