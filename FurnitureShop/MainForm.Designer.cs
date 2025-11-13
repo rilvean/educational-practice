@@ -38,6 +38,10 @@
 			txtSearch = new TextBox();
 			flowLayoutPanelMaterials = new FlowLayoutPanel();
 			tabMaterialsManagement = new TabPage();
+			btnRemove = new Button();
+			btnAdd = new Button();
+			btnEdit = new Button();
+			dataMaterials = new DataGridView();
 			tabProductsAnalysation = new TabPage();
 			tabLoginHistory = new TabPage();
 			txtFilterByLogin = new TextBox();
@@ -46,17 +50,13 @@
 			picLogo = new PictureBox();
 			lblUserInfo = new Label();
 			lblLogo = new Label();
-			dataMaterials = new DataGridView();
-			btnEdit = new Button();
-			btnAdd = new Button();
-			btnRemove = new Button();
 			tabControlMain.SuspendLayout();
 			tabMaterialsList.SuspendLayout();
 			tabMaterialsManagement.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)dataMaterials).BeginInit();
 			tabLoginHistory.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)dataLoginHistory).BeginInit();
 			((System.ComponentModel.ISupportInitialize)picLogo).BeginInit();
-			((System.ComponentModel.ISupportInitialize)dataMaterials).BeginInit();
 			SuspendLayout();
 			// 
 			// tabControlMain
@@ -170,6 +170,48 @@
 			tabMaterialsManagement.Text = "Materials Management";
 			tabMaterialsManagement.UseVisualStyleBackColor = true;
 			// 
+			// btnRemove
+			// 
+			btnRemove.Location = new Point(892, 531);
+			btnRemove.Name = "btnRemove";
+			btnRemove.Size = new Size(192, 41);
+			btnRemove.TabIndex = 3;
+			btnRemove.Text = "Remove";
+			btnRemove.UseVisualStyleBackColor = true;
+			btnRemove.Click += btnRemove_Click;
+			// 
+			// btnAdd
+			// 
+			btnAdd.Location = new Point(240, 531);
+			btnAdd.Name = "btnAdd";
+			btnAdd.Size = new Size(112, 41);
+			btnAdd.TabIndex = 2;
+			btnAdd.Text = "Add";
+			btnAdd.UseVisualStyleBackColor = true;
+			btnAdd.Click += btnAdd_Click;
+			// 
+			// btnEdit
+			// 
+			btnEdit.Location = new Point(76, 531);
+			btnEdit.Name = "btnEdit";
+			btnEdit.Size = new Size(112, 41);
+			btnEdit.TabIndex = 1;
+			btnEdit.Text = "Edit";
+			btnEdit.UseVisualStyleBackColor = true;
+			btnEdit.Click += btnEdit_Click;
+			// 
+			// dataMaterials
+			// 
+			dataMaterials.AllowUserToAddRows = false;
+			dataMaterials.AllowUserToDeleteRows = false;
+			dataMaterials.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			dataMaterials.Dock = DockStyle.Top;
+			dataMaterials.Location = new Point(3, 3);
+			dataMaterials.Name = "dataMaterials";
+			dataMaterials.ReadOnly = true;
+			dataMaterials.Size = new Size(1170, 493);
+			dataMaterials.TabIndex = 0;
+			// 
 			// tabProductsAnalysation
 			// 
 			tabProductsAnalysation.Location = new Point(4, 35);
@@ -248,45 +290,6 @@
 			lblLogo.TabIndex = 3;
 			lblLogo.Text = "Obraz Plus";
 			// 
-			// dataMaterials
-			// 
-			dataMaterials.AllowUserToAddRows = false;
-			dataMaterials.AllowUserToDeleteRows = false;
-			dataMaterials.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			dataMaterials.Dock = DockStyle.Top;
-			dataMaterials.Location = new Point(3, 3);
-			dataMaterials.Name = "dataMaterials";
-			dataMaterials.ReadOnly = true;
-			dataMaterials.Size = new Size(1170, 493);
-			dataMaterials.TabIndex = 0;
-			// 
-			// btnEdit
-			// 
-			btnEdit.Location = new Point(76, 531);
-			btnEdit.Name = "btnEdit";
-			btnEdit.Size = new Size(112, 41);
-			btnEdit.TabIndex = 1;
-			btnEdit.Text = "Edit";
-			btnEdit.UseVisualStyleBackColor = true;
-			// 
-			// btnAdd
-			// 
-			btnAdd.Location = new Point(240, 531);
-			btnAdd.Name = "btnAdd";
-			btnAdd.Size = new Size(112, 41);
-			btnAdd.TabIndex = 2;
-			btnAdd.Text = "Add";
-			btnAdd.UseVisualStyleBackColor = true;
-			// 
-			// btnRemove
-			// 
-			btnRemove.Location = new Point(892, 531);
-			btnRemove.Name = "btnRemove";
-			btnRemove.Size = new Size(192, 41);
-			btnRemove.TabIndex = 3;
-			btnRemove.Text = "Remove";
-			btnRemove.UseVisualStyleBackColor = true;
-			// 
 			// MainForm
 			// 
 			AutoScaleDimensions = new SizeF(96F, 96F);
@@ -302,11 +305,11 @@
 			tabMaterialsList.ResumeLayout(false);
 			tabMaterialsList.PerformLayout();
 			tabMaterialsManagement.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)dataMaterials).EndInit();
 			tabLoginHistory.ResumeLayout(false);
 			tabLoginHistory.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)dataLoginHistory).EndInit();
 			((System.ComponentModel.ISupportInitialize)picLogo).EndInit();
-			((System.ComponentModel.ISupportInitialize)dataMaterials).EndInit();
 			ResumeLayout(false);
 			PerformLayout();
 		}

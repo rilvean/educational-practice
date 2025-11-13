@@ -58,9 +58,7 @@ namespace FurnitureShop
 						}
 					}
 
-					App.Info($"{user.FullName}, {user.Role}");
 					LogUser(user, db);
-
 					User = user;
 					IsAuthenticated = true;
 					Close();
@@ -89,7 +87,7 @@ namespace FurnitureShop
 			}
 		}
 
-		private void txt_KeyPress(object sendet, KeyPressEventArgs e)
+		private void txt_KeyPress(object sender, KeyPressEventArgs e)
 		{
 			if (!char.IsControl(e.KeyChar) &&
 				!char.IsLetterOrDigit(e.KeyChar) &&

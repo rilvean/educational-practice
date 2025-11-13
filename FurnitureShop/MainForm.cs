@@ -29,12 +29,17 @@ namespace FurnitureShop
 			lblLogo.ForeColor = AccentColor;
 			LoadLoginHistory();
 			LoadMaterials();
+			LoadMaterialsToDataGrid();
 			cmbSort.SelectedIndex = 0;
 
 			txtFilterByLogin.Enabled = user.Role != Roles.Guest;
 			txtSearch.Enabled = user.Role != Roles.Guest;
 			cmbSort.Enabled = user.Role != Roles.Guest;
 			cmbMaterialType.Enabled = user.Role != Roles.Guest;
+
+			btnEdit.Enabled = user.Role == Roles.Admin;
+			btnAdd.Enabled = user.Role == Roles.Admin;
+			btnRemove.Enabled = user.Role == Roles.Admin;
 		}
 
 		protected override void ConfigureForm()
@@ -49,7 +54,8 @@ namespace FurnitureShop
 			Logout?.Invoke(this, EventArgs.Empty);
 		}
 
-		public static void FormatDataGridView(DataGridView dataGridView, Color backColor, Color additionalColor, Color accentColor, Font font)
+		public static void FormatDataGridView(DataGridView dataGridView, Color backColor, Color additionalColor, Color accentColor, Font font,
+			bool multiSelect = false, DataGridViewAutoSizeColumnsMode mode = DataGridViewAutoSizeColumnsMode.Fill)
 		{
 			dataGridView.ReadOnly = true;
 			dataGridView.RowHeadersVisible = false;
@@ -59,9 +65,9 @@ namespace FurnitureShop
 			dataGridView.AllowUserToResizeRows = false;
 
 			dataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-			dataGridView.MultiSelect = false;
+			dataGridView.MultiSelect = multiSelect;
 
-			dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+			dataGridView.AutoSizeColumnsMode = mode;
 			dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
 
 			dataGridView.BackgroundColor = backColor;
@@ -122,7 +128,7 @@ namespace FurnitureShop
 		{
 			Panel card = new Panel
 			{
-				Width = flowLayoutPanelMaterials.ClientSize.Width - 50,
+				Width = flowLayoutPanelMaterials.ClientSize.Width - 40,
 				Height = 130,
 				BorderStyle = BorderStyle.FixedSingle,
 				Margin = new Padding(10),
@@ -156,6 +162,7 @@ namespace FurnitureShop
 			};
 
 			lblRequired.Location = new Point(card.Width - lblRequired.Width - 20, 20);
+			lblRequired.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 
 			card.Controls.Add(lblTitle);
 			card.Controls.Add(lblDetails);
@@ -257,6 +264,95 @@ namespace FurnitureShop
 		//
 		// MaterialsManagement
 		//
-		
+		private void btnEdit_Click(object sender, EventArgs e)
+		{
+			if (dataMaterials.SelectedRows.Count != 1)
+			{
+				App.Error("Выберите только один материал для редактирования.");
+				return;
+			}
+
+			int selectedId = (int)dataMaterials.SelectedRows[0].Cells["Id"].Value;
+
+			using (var db = new Context())
+			{
+				var material = db.Materials
+					.Include(m => m.MaterialsType)
+					.FirstOrDefault(m => m.Id == selectedId);
+
+				if (material == null)
+				{
+					App.Error("Материал не найден.");
+					return;
+				}
+
+				var form = new MaterialForm(material);
+				if (form.ShowDialog() == DialogResult.OK)
+				{
+					LoadMaterialsToDataGrid();
+					LoadMaterials();
+				}
+			}
+		}
+
+		private void btnAdd_Click(object sender, EventArgs e)
+		{
+			var form = new MaterialForm(null);
+			if (form.ShowDialog() == DialogResult.OK)
+			{
+				LoadMaterialsToDataGrid();
+				LoadMaterials();
+			}
+		}
+
+		private void btnRemove_Click(object sender, EventArgs e)
+		{
+			if (MessageBox.Show("Delete selected materials?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+				return;
+
+			using (var db = new Context())
+			{
+				foreach (DataGridViewRow row in dataMaterials.SelectedRows)
+				{
+					int id = (int)row.Cells["Id"].Value;
+					var material = db.Materials.Find(id);
+					if (material != null)
+					{
+						db.Materials.Remove(material);
+					}
+				}
+				db.SaveChanges();
+			}
+
+			LoadMaterialsToDataGrid();
+			LoadMaterials();
+		}
+
+		private void LoadMaterialsToDataGrid()
+		{
+			FormatDataGridView(dataMaterials, MainColor, AdditionalColor, AccentColor, Font, true, DataGridViewAutoSizeColumnsMode.AllCells);
+
+			using (var db = new Context())
+			{
+				var materials = db.Materials
+					.Include(m => m.MaterialsType)
+					.Select(m => new
+					{
+						m.Id,
+						m.Name,
+						Type = m.MaterialsType.Name,
+						m.UnitPrice,
+						m.QuantityInStock,
+						m.MinQuantity,
+						m.QuantityInPack,
+						m.MeasurementUnit
+					})
+					.ToList();
+
+				dataMaterials.DataSource = materials;
+				dataMaterials.AutoResizeColumns();
+				dataMaterials.AutoResizeRows();
+			}
+		}
 	}
 }
