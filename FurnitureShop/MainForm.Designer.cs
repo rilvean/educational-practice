@@ -52,11 +52,8 @@
 			lblLogo = new Label();
 			tabControlMain.SuspendLayout();
 			tabMaterialsList.SuspendLayout();
-<<<<<<< HEAD
 			tabMaterialsManagement.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)dataMaterials).BeginInit();
-=======
->>>>>>> 6daa70d329efd22df3f927d4deaf9dac0c6f1828
 			tabLoginHistory.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)dataLoginHistory).BeginInit();
 			((System.ComponentModel.ISupportInitialize)picLogo).BeginInit();
@@ -238,11 +235,7 @@
 			// 
 			// txtFilterByLogin
 			// 
-<<<<<<< HEAD
 			txtFilterByLogin.Location = new Point(424, 539);
-=======
-			txtFilterByLogin.Location = new Point(419, 555);
->>>>>>> 6daa70d329efd22df3f927d4deaf9dac0c6f1828
 			txtFilterByLogin.Name = "txtFilterByLogin";
 			txtFilterByLogin.Size = new Size(354, 34);
 			txtFilterByLogin.TabIndex = 2;
@@ -311,11 +304,8 @@
 			tabControlMain.ResumeLayout(false);
 			tabMaterialsList.ResumeLayout(false);
 			tabMaterialsList.PerformLayout();
-<<<<<<< HEAD
 			tabMaterialsManagement.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)dataMaterials).EndInit();
-=======
->>>>>>> 6daa70d329efd22df3f927d4deaf9dac0c6f1828
 			tabLoginHistory.ResumeLayout(false);
 			tabLoginHistory.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)dataLoginHistory).EndInit();
