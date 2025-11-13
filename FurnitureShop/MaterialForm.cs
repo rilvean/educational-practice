@@ -1,45 +1,49 @@
 ﻿using FurnitureShop.Data;
-using Microsoft.EntityFrameworkCore;
+using FurnitureShop.Repositories;
 
 namespace FurnitureShop
 {
 	public partial class MaterialForm : BaseForm
 	{
-		private Material? _material;
-		private readonly Context db = new Context();
+		private Material? _externalMaterial;
+		private Context context = new Context();
+		private MaterialRepository repo;
 
-		public MaterialForm(Material? material)
+
+		public MaterialForm(Material material)
 		{
+			repo = new MaterialRepository(context);
+
 			InitializeComponent();
-			_material = material;
+			_externalMaterial = material;
 			LoadMaterialTypes();
-			LoadData();
+			LoadForm();
 		}
 
 		private void LoadMaterialTypes()
 		{
-			var types = db.MaterialsTypes.ToList();
+			var types = context.MaterialsTypes.ToList();
 			cmbType.DataSource = types;
 			cmbType.DisplayMember = "Name";
 			cmbType.ValueMember = "Id";
 		}
 
-		private void LoadData()
+		private void LoadForm()
 		{
-			if (_material == null)
+			if (_externalMaterial == null)
 			{
 				lblId.Text = "new";
 			}
 			else
 			{
-				lblId.Text = _material.Id.ToString();
-				txtName.Text = _material.Name;
-				txtUnitPrice.Text = _material.UnitPrice.ToString();
-				txtQtyInStock.Text = _material.QuantityInStock.ToString();
-				txtMinQty.Text = _material.MinQuantity.ToString();
-				txtQtyInPack.Text = _material.QuantityInPack.ToString();
-				txtUoM.Text = _material.MeasurementUnit.ToString();
-				cmbType.SelectedValue = _material.MaterialsTypeId;
+				lblId.Text = _externalMaterial.Id.ToString();
+				txtName.Text = _externalMaterial.Name;
+				txtUnitPrice.Text = _externalMaterial.UnitPrice.ToString();
+				txtQtyInStock.Text = _externalMaterial.QuantityInStock.ToString();
+				txtMinQty.Text = _externalMaterial.MinQuantity.ToString();
+				txtQtyInPack.Text = _externalMaterial.QuantityInPack.ToString();
+				txtUoM.Text = _externalMaterial.MeasurementUnit.ToString();
+				cmbType.SelectedValue = _externalMaterial.MaterialsTypeId;
 			}
 		}
 
@@ -51,36 +55,28 @@ namespace FurnitureShop
 				return;
 			}
 
-			if (_material == null)
+			if (_externalMaterial == null)
 			{
-				var newMaterial = new Material
-				{
-					Name = txtName.Text,
-					UnitPrice = float.Parse(txtUnitPrice.Text),
-					QuantityInStock = float.Parse(txtQtyInStock.Text),
-					MinQuantity = float.Parse(txtMinQty.Text),
-					QuantityInPack = float.Parse(txtQtyInPack.Text),
-					MeasurementUnit = txtUoM.Text,
-					MaterialsTypeId = (int)cmbType.SelectedValue!
-				};
-
-				db.Materials.Add(newMaterial);
+				repo.Add(txtName.Text,
+					float.Parse(txtUnitPrice.Text),
+					float.Parse(txtQtyInStock.Text),
+					float.Parse(txtMinQty.Text),
+					float.Parse(txtQtyInPack.Text),
+					txtUoM.Text,
+					(int)cmbType.SelectedValue!);
 			}
 			else
 			{
-				db.Materials
-					.Where(m => m.Id == _material.Id)
-					.ExecuteUpdate(s => s
-					.SetProperty(p => p.Name, txtName.Text)
-					.SetProperty(p => p.UnitPrice, float.Parse(txtUnitPrice.Text))
-					.SetProperty(p => p.QuantityInStock, float.Parse(txtQtyInStock.Text))
-					.SetProperty(p => p.MinQuantity, float.Parse(txtMinQty.Text))
-					.SetProperty(p => p.QuantityInPack, float.Parse(txtQtyInPack.Text))
-					.SetProperty(p => p.MeasurementUnit, txtUoM.Text)
-					.SetProperty(p => p.MaterialsTypeId, (int)cmbType.SelectedValue!));
+				repo.Edit(_externalMaterial,
+					txtName.Text,
+					float.Parse(txtUnitPrice.Text),
+					float.Parse(txtQtyInStock.Text),
+					float.Parse(txtMinQty.Text),
+					float.Parse(txtQtyInPack.Text),
+					txtUoM.Text,
+					(int)cmbType.SelectedValue!);
 			}
 
-			db.SaveChanges();
 			DialogResult = DialogResult.OK;
 			Close();
 		}

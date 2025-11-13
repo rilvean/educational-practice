@@ -1,4 +1,6 @@
-﻿namespace FurnitureShop
+﻿using FurnitureShop.Data;
+
+namespace FurnitureShop
 {
 	internal static class App
 	{
@@ -43,6 +45,19 @@
 						result.SetPixel(i, j, Color.White);
 
 			return result;
+		}
+
+		public static void LogUser(User user, Context context)
+		{
+			var entranceLog = new EntranceLog
+			{
+				UserId = user.Id,
+				FullName = user.FullName,
+				Role = user.Role,
+				LogInTime = DateTime.Now
+			};
+			context.Add(entranceLog);
+			context.SaveChanges();
 		}
 
 		public static void Error(string message)

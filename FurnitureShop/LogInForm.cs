@@ -58,7 +58,7 @@ namespace FurnitureShop
 						}
 					}
 
-					LogUser(user, db);
+					App.LogUser(user, db);
 					User = user;
 					IsAuthenticated = true;
 					Close();
@@ -100,19 +100,6 @@ namespace FurnitureShop
 		private void chkShowPassword_CheckedChanged(object sender, EventArgs e)
 		{
 			txtPassword.UseSystemPasswordChar = !chkShowPassword.Checked;
-		}
-
-		private void LogUser(User user, Context context)
-		{
-			var entranceLog = new EntranceLog
-			{
-				UserId = user.Id,
-				FullName = user.FullName,
-				Role = user.Role,
-				LogInTime = DateTime.Now
-			};
-			context.Add(entranceLog);
-			context.SaveChanges();
 		}
 
 		private void linkLogInAsGuest_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
