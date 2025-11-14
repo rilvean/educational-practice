@@ -315,7 +315,7 @@ namespace FurnitureShop
 
 		private void btnAdd_Click(object sender, EventArgs e)
 		{
-			var form = new MaterialForm(null);
+			var form = new MaterialForm(null!);
 			if (form.ShowDialog() == DialogResult.OK)
 			{
 				LoadMaterialsToDataGrid();

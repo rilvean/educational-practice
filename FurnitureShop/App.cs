@@ -1,4 +1,7 @@
 ﻿using FurnitureShop.Data;
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("FurnitureShop.Tests")]
 
 namespace FurnitureShop
 {
@@ -63,11 +66,6 @@ namespace FurnitureShop
 		public static void Error(string message)
 		{
 			MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-		}
-
-		public static void Info(string message)
-		{
-			MessageBox.Show(message, "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 	}
 }

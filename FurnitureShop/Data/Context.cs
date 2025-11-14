@@ -28,9 +28,15 @@ public partial class Context : DbContext
     public virtual DbSet<EntranceLog> EntranceLogs { get; set; }
 
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-		=> optionsBuilder.UseSqlServer("Server=82EY;Database=FurnitureShop;Trusted_Connection=True;TrustServerCertificate=True;");
+	{
+		if (!optionsBuilder.IsConfigured)
+		{
+			optionsBuilder.UseSqlServer("Server=82EY;Database=FurnitureShop;Trusted_Connection=True;TrustServerCertificate=True;");
+		}
+	}
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+
+	protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Material>(entity =>
         {

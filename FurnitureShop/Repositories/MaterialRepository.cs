@@ -31,16 +31,31 @@ namespace FurnitureShop.Repositories
 
 		public void Edit(Material material, string name, float unitPrice, float qtyInStock, float minQty, float qtyInPack, string uom, int mTypeId)
 		{
-			_context!.Materials
-				.Where(m => m.Id == material.Id)
-				.ExecuteUpdate(s => s
-				.SetProperty(p => p.Name, name)
-				.SetProperty(p => p.UnitPrice, unitPrice)
-				.SetProperty(p => p.QuantityInStock, qtyInStock)
-				.SetProperty(p => p.MinQuantity, minQty)
-				.SetProperty(p => p.QuantityInPack, qtyInPack)
-				.SetProperty(p => p.MeasurementUnit, uom)
-				.SetProperty(p => p.MaterialsTypeId, mTypeId));
+			if (_context!.Database.ProviderName == "Microsoft.EntityFrameworkCore.InMemory")
+			{
+				material.Name = name;
+				material.UnitPrice = unitPrice;
+				material.QuantityInStock = qtyInStock;
+				material.MinQuantity = minQty;
+				material.QuantityInPack = qtyInPack;
+				material.MeasurementUnit = uom;
+				material.MaterialsTypeId = mTypeId;
+
+				_context!.Materials.Update(material);
+			}
+			else
+			{
+				_context!.Materials
+					.Where(m => m.Id == material.Id)
+					.ExecuteUpdate(s => s
+					.SetProperty(p => p.Name, name)
+					.SetProperty(p => p.UnitPrice, unitPrice)
+					.SetProperty(p => p.QuantityInStock, qtyInStock)
+					.SetProperty(p => p.MinQuantity, minQty)
+					.SetProperty(p => p.QuantityInPack, qtyInPack)
+					.SetProperty(p => p.MeasurementUnit, uom)
+					.SetProperty(p => p.MaterialsTypeId, mTypeId));
+			}
 			_context!.SaveChanges();
 		}
 	}
